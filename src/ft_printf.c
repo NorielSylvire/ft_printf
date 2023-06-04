@@ -6,40 +6,56 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/03 21:07:50 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/04 21:03:07 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../ft_printf.h"
 
 static void	init_bflags(t_bflags *bflags);
+static int	parse_str(const char *str, size_t *i, t_bflags *bf, va_list args);
 static void	parse_bonus(const char *str, size_t *i, t_bflags *blfags);
-static void	parse_conversion(const char *str, size_t i, t_bflags bflags);
+static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args);
 
 int	ft_printf(const char *str, ...)
 {
-	static int	count;
-	size_t		i;
+	va_list		args;
 	t_bflags	bonus_flags;
+	int			ctr;
+	size_t		i;
 
+	va_start(args, str);
+	count = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%' && str[i + 1])
 		{
-			init_bflags(&bonus_flags);
-			if (ft_strchr("-.# +", str[i + 1]) || ft_isdigit(str[i + 1]))
-			{
-				parse_bonus(str, &i, &bonus_flags);
-			}
-			else if (ft_strchr("cspdiuxX%", str[i]) && !bonus_flags.invalid)
-			{
-				parse_conversion(str, i, bonus_flags);
-			}
+			ctr += parse_str(str, &i, &bonus_flags, args);
 		}
+		else
+			printchar(str[i], &ctr, 1);
 		i++;
 	}
-	return (count);
+	va_end(args);
+	return (ctr);
+}
+
+static int	parse_str(const char *str, size_t *i, t_bflags bf, va_list args)
+{
+	int			ctr;
+	size_t		i_percent;
+
+	init_bflags(bf);
+	ctr = 0;
+	i_percent = *i++;
+	if (ft_strchr("-.# +", str[*i + 1]) || ft_isdigit(str[*i + 1]))
+		parse_bonus(str, i, bf);
+	if (ft_strchr("cspdiuxX", str[*i]) && !bf->invalid)
+		parse_conversion(str[*i], &ctr, *bf, args);
+	else
+		print_invalid(str, i_percent, i);
+	return (ctr);
 }
 
 static void	init_bflags(t_bflags *bflags)
@@ -58,7 +74,6 @@ static void	init_bflags(t_bflags *bflags)
 
 static void	parse_bonus(const char *str, size_t *i, t_bflags *bflags)
 {
-	*i += 1;
 	while (ft_strchr("-.# +", str[*i]) || ft_isdigit(str[*i]))
 	{
 		if (str[*i] == '-' && !bflags->minus)
@@ -67,8 +82,31 @@ static void	parse_bonus(const char *str, size_t *i, t_bflags *bflags)
 			bflags->dot = 1;
 		else if (str[*i] == '#' && !bflags->hash)
 			bflags->hash = 1;
+		else if (str[*i] == ' ' && !bflags->blank)
+			bflags->blank = 1;
+		else if (str[*i] == '+' && !bflags->plus)
+			bflags->plus = 1;
 		else
+		{
 			bflags->invalid = 1;
+			break ;
+		}
 		*i += 1;
 	}
+}
+
+static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
+{
+	if (ch == 'd' || ch == 'i')
+		printnum(ctr, bflags, va_arg(args, int));
+	else if (ch == 'c')
+		printchar(ctr, bflags, va_arg(args, int));
+	else if (ch == 's')
+		printstr(ctr, bflags, va_arg(args, char *));
+	else if (ch == 'p')
+		printptr(ctr, bflags, va_arg(args, size_t));
+	else if (ch == 'u')
+		printuns(ctr, bflags, va_arg(args, unsigned int));
+	else if (ch == 'x' || ch == 'X')
+		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16, "");
 }
