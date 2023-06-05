@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 15:18:56 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/05 20:56:23 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/05 21:58:50 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_bflags
 	int	blank;
 	int	plus;
 	int	min_width;
+	int	precision;
 	int	invalid;
 }	t_bflags;
 

@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/05 20:55:04 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/05 21:59:22 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	init_bflags(t_bflags *bflags)
 	bflags->blank = 0;
 	bflags->plus = 0;
 	bflags->min_width = 0;
+	bflags->precision = 0;
 	bflags->invalid = 0;
 }
 
