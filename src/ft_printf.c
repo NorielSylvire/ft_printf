@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/04 21:03:07 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/05 20:55:04 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_printf(const char *str, ...)
 			ctr += parse_str(str, &i, &bonus_flags, args);
 		}
 		else
-			printchar(str[i], &ctr, 1);
+			printchar(&ctr, bonus_flags, str[i]);
 		i++;
 	}
 	va_end(args);

@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 15:18:56 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/04 21:30:32 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/05 20:56:23 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef struct s_bflags
 	int	invalid;
 }	t_bflags;
 
-int	ft_printf(const char *str, ...);
-void printchar(int *counter, t_bflags bflags, int ch);
+int		ft_printf(const char *str, ...);
+void	printchar(int *counter, t_bflags bflags, int ch);
+void	printstr(int *counter, t_bflags bflags, char *str);
+void	printnum(int *counter, t_bflags bflags, int num);
 
 #endif
