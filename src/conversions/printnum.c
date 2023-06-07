@@ -6,15 +6,16 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:53:49 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/06 20:55:46 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/06 23:10:55 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_printf.h"
+#include "../../include/ft_printf.h"
 
 void	printnum(int *counter, t_bflags bflags, int num)
 {
 	char	*str;
+
 	long	n;
 	int		bigger;
 	int		len;
@@ -35,13 +36,19 @@ void	printnum(int *counter, t_bflags bflags, int num)
 	str = ft_itoa(n);
 	len = (int) ft_strlen(str);
 	bigger = len;
+	if (bflags.min_width <= len)
+	{
+		*counter += ft_putchar_fd(' ', 1);
+		bflags.min_width--;
+		if (neg)
+	}
 	if (bflags.precision > len)
 		bigger = bflags.precision;
 	if (!bflags.minus)
 	{
 		while (bflags.min_width-- > bigger)
 			*counter += ft_putchar_fd(' ', 1);
-		if (neg)
+		if (neg && !bflags.zero)
 			*counter += ft_putchar_ft('-', 1);
 		else if (bflags.plus)
 			*counter += ft_putchar_fd('+', 1);

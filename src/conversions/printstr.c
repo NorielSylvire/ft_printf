@@ -6,11 +6,11 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:32:07 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/05 20:57:36 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/06 23:11:22 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_printf.h"
+#include "../../include/ft_printf.h"
 
 void	printstr(int *counter, t_bflags bflags, char *str)
 {

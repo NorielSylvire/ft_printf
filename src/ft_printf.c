@@ -6,11 +6,11 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/05 21:59:22 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/06 23:09:53 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_printf.h"
+#include "../include/ft_printf.h"
 
 static void	init_bflags(t_bflags *bflags);
 static int	parse_str(const char *str, size_t *i, t_bflags *bf, va_list args);
