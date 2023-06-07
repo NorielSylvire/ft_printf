@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 15:18:56 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/06 23:10:10 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/07 22:59:13 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ int		ft_printf(const char *str, ...);
 void	printchar(int *counter, t_bflags bflags, int ch);
 void	printstr(int *counter, t_bflags bflags, char *str);
 void	printnum(int *counter, t_bflags bflags, int num);
+void	printptr(int *counter, t_bflags bflags, size_t ptr);
+void	printuns(int *counter, t_bflags bflags, unsigned int num);
+void	printbase(int *counter, t_bflags bflags, unsigned int n, int base, char *chars);
 
 #endif

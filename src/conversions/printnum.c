@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:53:49 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/06 23:10:55 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/07 23:26:02 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	printnum(int *counter, t_bflags bflags, int num)
 {
 	char	*str;
-
 	long	n;
 	int		bigger;
 	int		len;
@@ -41,6 +40,7 @@ void	printnum(int *counter, t_bflags bflags, int num)
 		*counter += ft_putchar_fd(' ', 1);
 		bflags.min_width--;
 		if (neg)
+			neg = 1;
 	}
 	if (bflags.precision > len)
 		bigger = bflags.precision;
@@ -49,7 +49,7 @@ void	printnum(int *counter, t_bflags bflags, int num)
 		while (bflags.min_width-- > bigger)
 			*counter += ft_putchar_fd(' ', 1);
 		if (neg && !bflags.zero)
-			*counter += ft_putchar_ft('-', 1);
+			*counter += ft_putchar_fd('-', 1);
 		else if (bflags.plus)
 			*counter += ft_putchar_fd('+', 1);
 		while (bflags.precision-- > len)

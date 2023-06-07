@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/06 23:09:53 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/07 23:01:56 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_printf(const char *str, ...)
 	size_t		i;
 
 	va_start(args, str);
-	count = 0;
+	ctr = 0;
 	i = 0;
 	while (str[i])
 	{
@@ -41,7 +41,7 @@ int	ft_printf(const char *str, ...)
 	return (ctr);
 }
 
-static int	parse_str(const char *str, size_t *i, t_bflags bf, va_list args)
+static int	parse_str(const char *str, size_t *i, t_bflags *bf, va_list args)
 {
 	int			ctr;
 	size_t		i_percent;
@@ -49,12 +49,13 @@ static int	parse_str(const char *str, size_t *i, t_bflags bf, va_list args)
 	init_bflags(bf);
 	ctr = 0;
 	i_percent = *i++;
+	i_percent = i_percent;
 	if (ft_strchr("-.# +", str[*i + 1]) || ft_isdigit(str[*i + 1]))
 		parse_bonus(str, i, bf);
 	if (ft_strchr("cspdiuxX", str[*i]) && !bf->invalid)
-		parse_conversion(str[*i], &ctr, *bf, args);
-	else
-		print_invalid(str, i_percent, i);
+		parse_conv(str[*i], &ctr, *bf, args);
+	//else
+		//print_invalid(str, i_percent, i);
 	return (ctr);
 }
 
@@ -104,10 +105,10 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 		printchar(ctr, bflags, va_arg(args, int));
 	else if (ch == 's')
 		printstr(ctr, bflags, va_arg(args, char *));
-	else if (ch == 'p')
-		printptr(ctr, bflags, va_arg(args, size_t));
-	else if (ch == 'u')
-		printuns(ctr, bflags, va_arg(args, unsigned int));
-	else if (ch == 'x' || ch == 'X')
-		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16, "");
+	//else if (ch == 'p')
+	//	printptr(ctr, bflags, va_arg(args, size_t));
+	//else if (ch == 'u')
+	//	printuns(ctr, bflags, va_arg(args, unsigned int));
+	//else if (ch == 'x' || ch == 'X')
+	//	printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16, "");
 }
