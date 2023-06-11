@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror -I
 INCLUDE = include
 AR = ar -crs
@@ -27,10 +27,9 @@ all: $(NAME)
 
 $(NAME): mkdir $(OBJ)
 	@make -C libft
-	@cp libft/libft.a .
-	@mv libft.a $(NAME)
+	@cp libft/libft.a $(NAME)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "$(GREEN)$(NAME) compiled successfully$(DEF_COLOR)"
+	@echo "$(GREEN)$(NAME) compiled successfully$(DEF_COLOR)\n"
 
 bonus: all
 

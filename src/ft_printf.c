@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/07 23:01:56 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/11 19:37:38 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int	ft_printf(const char *str, ...)
 	i = 0;
 	while (str[i])
 	{
+		init_bflags(&bonus_flags);
 		if (str[i] == '%' && str[i + 1])
-		{
 			ctr += parse_str(str, &i, &bonus_flags, args);
-		}
 		else
 			printchar(&ctr, bonus_flags, str[i]);
 		i++;
@@ -46,13 +45,12 @@ static int	parse_str(const char *str, size_t *i, t_bflags *bf, va_list args)
 	int			ctr;
 	size_t		i_percent;
 
-	init_bflags(bf);
 	ctr = 0;
-	i_percent = *i++;
-	i_percent = i_percent;
+	i_percent = *i;
+	*i += 1;
 	if (ft_strchr("-.# +", str[*i + 1]) || ft_isdigit(str[*i + 1]))
 		parse_bonus(str, i, bf);
-	if (ft_strchr("cspdiuxX", str[*i]) && !bf->invalid)
+	if (ft_strchr("cspdiuxX%", str[*i]) && !bf->invalid)
 		parse_conv(str[*i], &ctr, *bf, args);
 	//else
 		//print_invalid(str, i_percent, i);
@@ -78,22 +76,27 @@ static void	parse_bonus(const char *str, size_t *i, t_bflags *bflags)
 {
 	while (ft_strchr("-.# +", str[*i]) || ft_isdigit(str[*i]))
 	{
-		if (str[*i] == '-' && !bflags->minus)
+		if (str[*i] == '-' && !bflags->minus && !bflags->width_parsed)
 			bflags->minus = 1;
-		else if (str[*i] == '.' && !bflags->dot)
+		else if (str[*i] == '0' && !bflags->zero && !bflags->width_parsed)
+			bflags->zero = 1;
+		else if (str[*i] == '.' && !bflags->dot && !bflags->width_parsed) 
 			bflags->dot = 1;
-		else if (str[*i] == '#' && !bflags->hash)
+		else if (str[*i] == '#' && !bflags->hash && !bflags->width_parsed)
 			bflags->hash = 1;
-		else if (str[*i] == ' ' && !bflags->blank)
+		else if (str[*i] == ' ' && !bflags->blank&& !bflags->width_parsed)
 			bflags->blank = 1;
-		else if (str[*i] == '+' && !bflags->plus)
+		else if (str[*i] == '+' && !bflags->plus && !bflags->width_parsed)
 			bflags->plus = 1;
+		else if (ft_isdigit(str[*i]) && !bflags->width_parsed && str[*i != '0'])
+			parse_nbr(str, i, bflags);
 		else
 		{
 			bflags->invalid = 1;
 			break ;
 		}
-		*i += 1;
+		if (!bflags->width_parsed)
+			*i += 1;
 	}
 }
 
@@ -103,6 +106,8 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 		printnum(ctr, bflags, va_arg(args, int));
 	else if (ch == 'c')
 		printchar(ctr, bflags, va_arg(args, int));
+	else if (ch == '%')
+		printchar(ctr, bflags, '%');
 	else if (ch == 's')
 		printstr(ctr, bflags, va_arg(args, char *));
 	//else if (ch == 'p')
@@ -110,5 +115,13 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 	//else if (ch == 'u')
 	//	printuns(ctr, bflags, va_arg(args, unsigned int));
 	//else if (ch == 'x' || ch == 'X')
-	//	printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16, "");
+	//	printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16, NULL);
+}
+
+
+int main()
+{
+	int res = ft_printf("|%+ 10d|", 123);
+	printf("\nReturn value: %d", res);
+	return (0);
 }
