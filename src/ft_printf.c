@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/11 21:46:34 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/11 21:50:27 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 	else if (ch == 'u')
 		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 10);
 	else if (ch == 'x' || ch == 'X')
-		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 27); //TODO 
+		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16); //TODO 
 }
 
 
 int main()
 {
-	int res = ft_printf("|%x|", 10);
+	int res = ft_printf("|%x|", 1234567890);
 	printf("\nReturn value: %d", res);
 	return (0);
 }
