@@ -6,9 +6,12 @@ AR = ar -crs
 RM = rm -rf
 O = obj/
 SRC = src/ft_printf.c \
+	  src/utils/utils.c \
 	  src/conversions/printchar.c \
 	  src/conversions/printstr.c \
-	  src/conversions/printnum.c
+	  src/conversions/printnum.c \
+	  src/conversions/printbase.c \
+	  src/conversions/printptr.c
 OBJ = $(SRC:%=$O%.o)
 UNW = .DS_Store ./*/.DS_Store
 
@@ -37,7 +40,8 @@ $O%.o: %
 	$(CC) $(CFLAGS) include -c $^ -o $@
 
 mkdir:
-	mkdir -p $O/src/conversions
+	@mkdir -p $O/src/conversions
+	@mkdir -p $O/src/utils
 
 clean:
 	@make clean -C libft

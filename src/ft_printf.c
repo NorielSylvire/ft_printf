@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/11 21:50:27 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/14 23:04:05 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static int	parse_str(const char *str, size_t *i, t_bflags *bf, va_list args)
 	*i += 1;
 	if (ft_strchr("-.# +", str[*i + 1]) || ft_isdigit(str[*i + 1]))
 		parse_bonus(str, i, bf);
-	if (ft_strchr("cspdiuxX%", str[*i]) && !bf->invalid)
+	if (ft_strchr("cspdiuxX%o", str[*i]) && !bf->invalid)
 		parse_conv(str[*i], &ctr, *bf, args);
-	//else
-		//print_invalid(str, i_percent, i);
+	else
+		ctr += ft_putsubstr_fd(str, i_percent, *i, 1);
 	return (ctr);
 }
 
@@ -110,18 +110,20 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 		printchar(ctr, bflags, '%');
 	else if (ch == 's')
 		printstr(ctr, bflags, va_arg(args, char *));
-	//else if (ch == 'p')
-	//	printptr(ctr, bflags, va_arg(args, size_t));
+	else if (ch == 'p')
+		printptr(ctr, bflags, va_arg(args, size_t));
+	else if (ch == 'o')
+		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 8);
 	else if (ch == 'u')
 		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 10);
 	else if (ch == 'x' || ch == 'X')
 		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16); //TODO 
 }
 
-
+/*
 int main()
 {
-	int res = ft_printf("|%x|", 1234567890);
+	int res = ft_printf("|% 0-+16o|", 123450);
 	printf("\nReturn value: %d", res);
 	return (0);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:00:14 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/11 21:40:50 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/14 23:18:46 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
 {
 	char			*str;
 	char			*filler;
-	char			*bases = BASES;
 	unsigned  int	nbr;
 	unsigned  short	ndigits;
 
@@ -36,7 +35,7 @@ void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
 	str = ft_calloc(ndigits + 1, sizeof (char));
 	while (ndigits > 0)
 	{
-		str[--ndigits] = bases[n % b];
+		str[--ndigits] = digit(n, b);
 		if (ch == 'X')
 			str[ndigits] = change_letter(str[ndigits]);
 		n /= b;
@@ -59,9 +58,11 @@ void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
 
 static char	change_letter(char ch)
 {
+	if (ft_isdigit((int) ch))
+		return (ch);
 	if (ft_isupper((int) ch))
-		ch -= 'a' - 'A';
-	else
 		ch += 'a' - 'A';
+	else
+		ch -= 'a' - 'A';
 	return (ch);
 }
