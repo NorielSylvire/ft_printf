@@ -6,13 +6,13 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:20:58 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/14 23:14:42 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/25 20:59:35 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-void parse_nbr(const char *str, size_t *i, t_bflags *bflags)
+void  parse_width(const char *str, size_t *i, t_bflags *bflags)
 {
 	bflags->width_parsed = 1;
 	while (ft_isdigit(str[*i]))
@@ -24,7 +24,25 @@ void parse_nbr(const char *str, size_t *i, t_bflags *bflags)
 	}
 }
 
-char digit(unsigned int nbr, int base)
+void  parse_precision(const char *str, size_t *i, t_bflags *bflags)
+{
+	bflags->dot = 1;
+	*i += 1;
+	if (str[*i] == '0')
+	{
+		*i += 1;
+		return ;
+	}
+	while (ft_isdigit(str[*i]))
+	{
+		bflags->precision += str[*i] - '0';
+		if (ft_isdigit(str[*i + 1]))
+			bflags->precision *= 10;
+		*i += 1;
+	}
+}
+
+char  digit(unsigned int nbr, int base)
 {
 	char			*digits;
 	unsigned int	remainder;
@@ -37,3 +55,21 @@ char digit(unsigned int nbr, int base)
 		return (digits[remainder - 10]);
 }
 
+char	change_letter(char ch)
+{
+	if (ft_isdigit((int) ch))
+		return (ch);
+	if (ft_isupper((int) ch))
+		ch += 'a' - 'A';
+	else
+		ch -= 'a' - 'A';
+	return (ch);
+}
+
+void	ft_free(char **str)
+{
+	if (!*str)
+		return ;
+	free(*str);
+	*str = NULL;
+}

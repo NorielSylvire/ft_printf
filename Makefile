@@ -7,6 +7,8 @@ RM = rm -rf
 O = obj/
 SRC = src/ft_printf.c \
 	  src/utils/utils.c \
+	  src/utils/formatting.c \
+	  src/utils/base_formatting.c \
 	  src/conversions/printchar.c \
 	  src/conversions/printstr.c \
 	  src/conversions/printnum.c \

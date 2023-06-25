@@ -6,28 +6,34 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:00:14 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/14 23:18:46 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/25 21:44:54 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static char	change_letter(char ch);
+static char	*make_string(char ch, t_bflags bf, unsigned int n, int b);
+static char *capitalize(char *str);
 
 void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
 {
+	char  *str;
+	
+	str = make_string(ch, bf, n, b);
+	str = width_and_sign_base(str, bf, n, b);
+	*ctr += ft_putstr_fd(str, 1);
+	ft_free(&str);
+}
+
+static char	*make_string(char ch, t_bflags bf, unsigned int n, int b)
+{
 	char			*str;
-	char			*filler;
 	unsigned  int	nbr;
 	unsigned  short	ndigits;
 
-	filler = ft_calloc(2, sizeof (char));
-	*filler = ' ';
-	if (bf.zero && !bf.minus)
-		*filler = '0';
 	nbr = n;
 	ndigits = 1;
-	while (nbr > (unsigned int) b)
+	while (nbr >= (unsigned int) b)
 	{
 		nbr /= (unsigned int) b;
 		ndigits += 1;
@@ -36,33 +42,23 @@ void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
 	while (ndigits > 0)
 	{
 		str[--ndigits] = digit(n, b);
-		if (ch == 'X')
-			str[ndigits] = change_letter(str[ndigits]);
 		n /= b;
 	}
-	if (bf.plus || bf.blank)
-		bf.min_width--;
-	while (bf.min_width--)
-	{
-		if (bf.minus)
-			str = ft_append(str, filler);
-		else
-			str = ft_preppend(str, filler);
-	}
-	if (bf.plus)
-		str = ft_preppend(str, "+");
-	else if (bf.blank)
-		str = ft_preppend(str, " ");
-	*ctr += ft_putstr_fd(str, 1);
+	if (ch == 'X')
+		str = capitalize(str);
+	str = format_base(str, bf);
+	return (str);
 }
 
-static char	change_letter(char ch)
+static char *capitalize(char *str)
 {
-	if (ft_isdigit((int) ch))
-		return (ch);
-	if (ft_isupper((int) ch))
-		ch += 'a' - 'A';
-	else
-		ch -= 'a' - 'A';
-	return (ch);
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		str[i] = change_letter(str[i]);
+		i++;
+	}
+	return (str);
 }

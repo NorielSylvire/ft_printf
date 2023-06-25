@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:32:07 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/06 23:11:22 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/06/24 21:19:24 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,24 @@
 
 void	printstr(int *counter, t_bflags bflags, char *str)
 {
-	bflags.min_width -= (int) ft_strlen(str);
+	int	will_print;
+
+	if (bflags.dot && bflags.precision == 0)
+		str = NULL;
+	else if (!str)
+	{
+		ft_free(&str);
+		str = "(null)";
+	}
+	will_print = (int) ft_strlen(str);
+	if (bflags.precision != 0 
+		&& will_print != 0 
+		&& bflags.precision < will_print)
+		will_print = bflags.precision;
+	bflags.min_width -= will_print;
 	if (bflags.minus)
 	{
-		*counter += ft_putstr_fd(str, 1);
+		*counter += ft_putsubstr_fd(str, 0, bflags.precision - 1, 1);
 		while (bflags.min_width-- > 0)
 			*counter += ft_putchar_fd(' ', 1);
 	}
@@ -25,6 +39,6 @@ void	printstr(int *counter, t_bflags bflags, char *str)
 	{
 		while (bflags.min_width-- > 0)
 			*counter += ft_putchar_fd(' ', 1);
-		*counter += ft_putstr_fd(str, 1);
+		*counter += ft_putsubstr_fd(str, 0, bflags.precision - 1, 1);
 	}
 }
