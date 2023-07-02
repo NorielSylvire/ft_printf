@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:53:49 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/25 20:37:45 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/07/02 19:48:12 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	printnum(int *counter, t_bflags bflags, int num)
 {
-	long    n;
+	long	n;
 	char	*str;
 
 	n = (long) num;

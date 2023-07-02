@@ -6,30 +6,30 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:00:14 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/25 21:44:54 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/07/02 19:47:06 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-static char	*make_string(char ch, t_bflags bf, unsigned int n, int b);
-static char *capitalize(char *str);
+static char	*make_string(t_bflags bf, unsigned int n, int b);
+static char	*capitalize(char *str);
 
-void	printbase(char ch, int *ctr, t_bflags bf, unsigned int n, int b)
+void	printbase(int *ctr, t_bflags bf, unsigned int n, int b)
 {
-	char  *str;
-	
-	str = make_string(ch, bf, n, b);
+	char	*str;
+
+	str = make_string(bf, n, b);
 	str = width_and_sign_base(str, bf, n, b);
 	*ctr += ft_putstr_fd(str, 1);
 	ft_free(&str);
 }
 
-static char	*make_string(char ch, t_bflags bf, unsigned int n, int b)
+static char	*make_string(t_bflags bf, unsigned int n, int b)
 {
 	char			*str;
-	unsigned  int	nbr;
-	unsigned  short	ndigits;
+	unsigned int	nbr;
+	unsigned short	ndigits;
 
 	nbr = n;
 	ndigits = 1;
@@ -44,13 +44,13 @@ static char	*make_string(char ch, t_bflags bf, unsigned int n, int b)
 		str[--ndigits] = digit(n, b);
 		n /= b;
 	}
-	if (ch == 'X')
+	if (bf.uppercase == 1)
 		str = capitalize(str);
 	str = format_base(str, bf);
 	return (str);
 }
 
-static char *capitalize(char *str)
+static char	*capitalize(char *str)
 {
 	size_t	i;
 

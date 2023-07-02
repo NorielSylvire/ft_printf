@@ -6,18 +6,18 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:37:35 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/25 20:55:57 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/07/02 19:40:40 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-char  *format_number(t_bflags bflags, long num)
+char	*format_number(t_bflags bflags, long num)
 {
-	char  *ret;
-	char  *pre;
-	int	  len;
-	int	  i;
+	char	*ret;
+	char	*pre;
+	int		len;
+	int		i;
 
 	if (num < 0)
 		num *= -1;
@@ -37,12 +37,12 @@ char  *format_number(t_bflags bflags, long num)
 	return (ret);
 }
 
-char  *width_and_sign(char *str, t_bflags bflags, long num)
+char	*width_and_sign(char *str, t_bflags bflags, long num)
 {
 	int	len;
 
 	len = (int) ft_strlen(str);
-	if (bflags.plus || num < 0 
+	if (bflags.plus || num < 0
 		|| (bflags.blank && (bflags.zero || bflags.minus)))
 		bflags.min_width--;
 	if (bflags.zero && !bflags.minus && !bflags.dot)
@@ -55,22 +55,22 @@ char  *width_and_sign(char *str, t_bflags bflags, long num)
 	return (str);
 }
 
-char  *space(char *str, t_bflags bflags, long num)
+char	*space(char *str, t_bflags bflags, long num)
 {
-	if ((bflags.blank && !bflags.plus && num >= 0) 
+	if ((bflags.blank && !bflags.plus && num >= 0)
 		&& (*str != ' ' || (*str == ' ' && bflags.zero)))
 		str = ft_preppend(str, " ");
-	if (num == 0 && bflags.minus && bflags.blank 
+	if (num == 0 && bflags.minus && bflags.blank
 		&& bflags.dot && bflags.precision == 0 && bflags.min_width > 1)
 		str = ft_preppend(str, " ");
 	return (str);
 }
 
-char  *width(char *str, t_bflags *bflags, int len, char filler)
+char	*width(char *str, t_bflags *bflags, int len, char filler)
 {
-	char  *pre;
-	int	  i;
-	
+	char	*pre;
+	int		i;
+
 	if (bflags->min_width > len)
 	{
 		pre = ft_calloc(bflags->min_width - len + 1, sizeof (char));

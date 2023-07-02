@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 21:30:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/11 14:08:57 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/07/02 19:47:33 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	printchar(int *counter, t_bflags bflags, int ch)
 {
-	//printf("printchar\n");
 	if (bflags.minus)
 	{
 		*counter += ft_putchar_fd(ch, 1);

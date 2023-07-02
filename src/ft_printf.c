@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/06/24 21:17:06 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/07/02 20:24:23 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ static void	parse_bonus(const char *str, size_t *i, t_bflags *bflags)
 {
 	while (ft_strchr("-.# +", str[*i]) || ft_isdigit(str[*i]))
 	{
-		if (str[*i] == '-' && !bflags->minus && !bflags->width_parsed)
+		if (str[*i] == '-' && !bflags->width_parsed)
 			bflags->minus = 1;
 		else if (str[*i] == '0' && !bflags->zero && !bflags->width_parsed)
 			bflags->zero = 1;
 		else if (ft_isdigit(str[*i]) && !bflags->width_parsed && str[*i != '0'])
 			parse_width(str, i, bflags);
-		else if (str[*i] == '.' && !bflags->dot) 
+		else if (str[*i] == '.' && !bflags->dot)
 			parse_precision(str, i, bflags);
 		else if (str[*i] == '#' && !bflags->hash && !bflags->width_parsed)
 			bflags->hash = 1;
-		else if (str[*i] == ' ' && !bflags->blank&& !bflags->width_parsed)
+		else if (str[*i] == ' ' && !bflags->blank && !bflags->width_parsed)
 			bflags->blank = 1;
 		else if (str[*i] == '+' && !bflags->plus && !bflags->width_parsed)
 			bflags->plus = 1;
@@ -113,18 +113,13 @@ static void	parse_conv(const char ch, int *ctr, t_bflags bflags, va_list args)
 	else if (ch == 'p')
 		printptr(ctr, bflags, va_arg(args, size_t));
 	else if (ch == 'o')
-		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 8);
+		printbase(ctr, bflags, va_arg(args, unsigned int), 8);
 	else if (ch == 'u')
-		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 10);
+		printbase(ctr, bflags, va_arg(args, unsigned int), 10);
 	else if (ch == 'x' || ch == 'X')
-		printbase(ch, ctr, bflags, va_arg(args, unsigned int), 16); //TODO 
+	{
+		if (ch == 'X')
+			bflags.uppercase = 1;
+		printbase(ctr, bflags, va_arg(args, unsigned int), 16);
+	}
 }
-
-/*
-int main()
-{
-	//char *str = "hola jeje";
-	int res = ft_printf("%3.1s, %3.1s, %3.1s, %3.1s", (char *)NULL, "", "test", "joihwhhgsdkhksdgsdg\t\v\n\r\f\a25252\b6");
-	printf("\nReturn value: %d", res);
-	return (0);
-}*/
