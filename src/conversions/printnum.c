@@ -6,21 +6,29 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 20:53:49 by fhongu            #+#    #+#             */
-/*   Updated: 2023/10/15 19:02:32 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/10/27 22:31:25 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-void	printnum(int *counter, t_bflags bflags, int num)
+void	printnum(char **str, t_flags flags, int num)
 {
 	long	n;
-	char	*str;
 
 	n = (long) num;
-	str = format_number(bflags, n);
-	str = width_and_sign(str, bflags, n);
-	str = space(str, bflags, n);
-	*counter += ft_putstr_fd(str, 1);
-	ft_free((void **) &str);
+	if (n < 0)
+		n *= -1;
+	ft_free((void **) str);
+	*str = ft_ltoa(n);
+	if (BONUS)
+	{
+		format_number(flags, str);
+		*str = width_and_sign(*str, flags, n);
+		*str = space(*str, flags, n);
+	}
+	else if (num < 0)
+	{
+		*str = ft_preppend(*str, "-", 1, 0);
+	}
 }

@@ -6,24 +6,24 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 21:30:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/07/02 19:47:33 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/10/27 22:13:17 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-void	printchar(int *counter, t_bflags bflags, int ch)
+void	printchar(char **str, t_flags flags, int ch)
 {
-	if (bflags.minus)
+	char	*apd;
+
+	apd = ft_calloc(2, sizeof (char));
+	*apd = (char) ch;
+	if (BONUS)
 	{
-		*counter += ft_putchar_fd(ch, 1);
-		while (--bflags.min_width > 0)
-			*counter += ft_putchar_fd(' ', 1);
+		printchar_bonus(str, flags, apd);
 	}
 	else
 	{
-		while (--bflags.min_width > 0)
-			*counter += ft_putchar_fd(' ', 1);
-		*counter += ft_putchar_fd(ch, 1);
+		*str = ft_append(*str, apd, 1, 1);
 	}
 }

@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printstr.c                                         :+:      :+:    :+:   */
+/*   printchar_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 20:32:07 by fhongu            #+#    #+#             */
-/*   Updated: 2023/10/27 22:13:30 by fhongu           ###   ########.fr       */
+/*   Created: 2023/10/18 21:14:51 by fhongu            #+#    #+#             */
+/*   Updated: 2023/10/27 22:47:07 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
 
-void	printstr(char **str, t_flags flags, char *arg)
+void	printchar_bonus(char **str, t_flags flags, char *apd)
 {
-	if (!arg)
+	if (flags.minus)
 	{
-		ft_free((void **) &arg);
-		arg = "(null)";
-	}
-	if (BONUS)
-	{
-		printstr_bonus(str, flags, arg);
+			*str = ft_append(*str, apd, 1, 1);
+		while (--flags.min_width > 0)
+			*str = ft_append(*str, " ", 1, 0);
 	}
 	else
 	{
-		*str = ft_append(*str, arg, 1, 0);
+		while (--flags.min_width > 0)
+			*str = ft_append(*str, " ", 1, 0);
+		*str = ft_append(*str, apd, 1, 1);
 	}
 }

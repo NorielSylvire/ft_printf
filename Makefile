@@ -7,15 +7,19 @@ AR = ar -crs
 RM = rm -rf
 O = obj/
 SRC = src/ft_printf.c \
-	  src/utils/utils.c \
-	  src/utils/formatting.c \
-	  src/utils/base_formatting.c \
+	  src/utils/base_funcs.c \
 	  src/conversions/printchar.c \
 	  src/conversions/printstr.c \
 	  src/conversions/printnum.c \
 	  src/conversions/printbase.c \
 	  src/conversions/printptr.c
+BSRC = bsrc/conversions/printchar_bonus.c \
+		bsrc/conversions/printstr_bonus.c \
+		bsrc/utils/base_formatting.c \
+	  	bsrc/utils/formatting.c \
+		bsrc/utils/bonus_parsing.c
 OBJ = $(SRC:%=$O%.o)
+BOBJ = $(BSRC:%=$O%.o)
 UNW = .DS_Store ./*/.DS_Store
 
 # Colors
@@ -35,15 +39,20 @@ BONUS = 0
 all: $(NAME)
 
 bonus: BONUS := 1
-bonus: $(NAME)
+bonus: prebonus $(BOBJ)
+	@echo "$(GREEN)Bonus objects compiled successfully.$(DEF_COLOR)\n"
+	@echo "$(YELLOW)Adding bonus objects to library archive.$(DEF_COLOR)\n"
+	@$(AR) $(NAME) $(BOBJ)
+	@echo "$(GREEN)$(NAME) bonus compiled successfully.$(DEF_COLOR)\n"
+	@make $(NAME)
 
 $(NAME): precomp $(OBJ)
-	@echo "$(GREEN)Objects compiled successfully$(DEF_COLOR)\n"
+	@echo "$(GREEN)Objects compiled successfully.$(DEF_COLOR)\n"
 	@make -C libft
 	@cp libft/libft.a $(NAME)
-	@echo "$(YELLOW)Generating library archive$(DEF_COLOR)\n"
+	@echo "$(YELLOW)Generating library archive.$(DEF_COLOR)\n"
 	@$(AR) $(NAME) $(OBJ)
-	@echo "$(GREEN)$(NAME) compiled successfully$(DEF_COLOR)\n"
+	@echo "$(GREEN)$(NAME) compiled successfully.$(DEF_COLOR)\n"
 
 $O%.o: %
 	$(CC) $(CFLAGS) -DBONUS=$(BONUS) $(INCLUDE) -c $^ -o $@
@@ -53,6 +62,12 @@ precomp:
 	@mkdir -p $O/src/conversions
 	@mkdir -p $O/src/utils
 	@echo "$(YELLOW)Compiling $(NAME) objects.$(DEF_COLOR)\n"
+
+prebonus:
+	@echo "$(YELLOW)Creating bonus object directories.$(DEF_COLOR)\n"
+	@mkdir -p $O/bsrc/conversions
+	@mkdir -p $O/bsrc/utils
+	@echo "$(YELLOW)Compiling $(NAME) bonus objects.$(DEF_COLOR)\n"
 
 clean:
 	@echo "$(GREEN)Cleaning compiled $(NAME) sources.$(DEF_COLOR)\n"
