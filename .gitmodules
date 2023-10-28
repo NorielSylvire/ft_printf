@@ -1,4 +1,4 @@
 
 [submodule "libft"]
 	path = libft
-	url = ./libft
+	url = https://github.com/NorielSylvire/libft.git
