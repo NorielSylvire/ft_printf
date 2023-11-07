@@ -1,7 +1,7 @@
 # Program
 NAME = libftprintf.a
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 INCLUDE = -I include
 AR = ar -crs
 RM = rm -rf
