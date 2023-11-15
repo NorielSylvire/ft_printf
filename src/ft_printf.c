@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 19:31:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/11/15 09:38:25 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/11/15 09:51:20 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_printf(const char *str, ...)
 	size_t		i;
 	int			ret;
 
-	flags.nullChars = 0;
+	flags.null_chars = 0;
 	va_start(args, str);
 	f_str = ft_calloc(1, sizeof (char));
 	i = 0;
@@ -38,7 +38,7 @@ int	ft_printf(const char *str, ...)
 		i++;
 	}
 	ft_putstr_fd(f_str, 1);
-	ret = (int) ft_strlen(f_str) + flags.nullChars;
+	ret = (int) ft_strlen(f_str) + flags.null_chars;
 	ft_free((void **) &f_str);
 	va_end(args);
 	return (ret);
