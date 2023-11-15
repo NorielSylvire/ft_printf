@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 15:18:56 by fhongu            #+#    #+#             */
-/*   Updated: 2023/10/27 19:58:01 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/11/15 09:16:29 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "./ft_printf_bonus.h"
 
 int		ft_printf(const char *str, ...);
-void	printchar(char **str, t_flags flags, int ch);
+void	printchar(char **str, t_flags *flags, int ch);
 void	printstr(char **str, t_flags flags, char *arg);
 void	printnum(char **str, t_flags flags, int num);
 void	printptr(char **str, t_flags flags, size_t ptr);

@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 22:01:16 by fhongu            #+#    #+#             */
-/*   Updated: 2023/10/28 10:27:49 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/11/15 09:14:06 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_flags
 	int	min_width;
 	int	precision;
 	int	invalid;
+	int	nullChars;
 }	t_flags;
 
 void	printchar_bonus(char **str, t_flags flags, char *apd);

@@ -1,7 +1,7 @@
 # Program
 NAME = libftprintf.a
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE = -I include
 AR = ar -crs
 RM = rm -rf
@@ -68,6 +68,13 @@ prebonus:
 	@mkdir -p $O/bsrc/conversions
 	@mkdir -p $O/bsrc/utils
 	@echo "$(YELLOW)Compiling $(NAME) bonus objects.$(DEF_COLOR)\n"
+
+linstall:
+	@mkdir -p ~/include
+	@cp ./include/ft_printf.h ~/include/
+	@cp ./include/ft_printf_bonus.h ~/include/
+	@mkdir -p ~/lib
+	@cp ./${NAME} ~/lib/
 
 clean:
 	@echo "$(GREEN)Cleaning compiled $(NAME) sources.$(DEF_COLOR)\n"
