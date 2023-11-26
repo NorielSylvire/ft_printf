@@ -6,7 +6,7 @@
 /*   By: fhongu <fhongu@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 21:30:42 by fhongu            #+#    #+#             */
-/*   Updated: 2023/11/15 09:50:53 by fhongu           ###   ########.fr       */
+/*   Updated: 2023/11/25 21:46:15 by fhongu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	printchar(char **str, t_flags *flags, int ch)
 {
 	char	*apd;
 
-	if (!ch)
+	if ((ch % 256) == 0)
 		flags->null_chars++;
 	apd = ft_calloc(2, sizeof (char));
 	*apd = (char) ch;
